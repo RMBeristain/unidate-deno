@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+em {
+  font-style: itallic;
+}
+
+:root {
+  /* color-scheme: light dark; */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.imgShadow {
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #111);
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #0ea5e9);
+}
+
+@layer components {
+  .appButton {
+    @apply bg-sky-500 text-white hover:bg-sky-600 rounded-lg px-4 py-2;
+  }
+  .timeCardLight {
+    @apply bg-gray-100 p-6 rounded-lg shadow-md;
+  }
+  .timeCardDark {
+    @apply bg-sky-100 p-6 rounded-lg shadow-md;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .appButton {
+      @apply bg-sky-700 text-slate-200 dark:hover:bg-sky-800;
+    }
+    .timeCardLight {
+      @apply dark:bg-gray-400;
+    }
+    .timeCardDark {
+      @apply dark:bg-sky-500;
+    }
+  }
+}

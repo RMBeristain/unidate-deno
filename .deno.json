@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "dom.asynciterable",
+            "deno.ns"
+        ]
+    },
+    "lint": {
+        "rules": {
+            " stylistic": [
+                "error",
+                {
+                    "line-length": 120,
+                    "indent-width": 4,
+                    "no-semicolons": true
+                }
+            ]
+        }
+    }
+}

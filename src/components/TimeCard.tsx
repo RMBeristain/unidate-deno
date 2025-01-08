@@ -1,28 +1,38 @@
+import { useState } from "react";
+import Clock from "./Clock";
+
 const TimeCard = (
-  {
-    timeCardStyle = "timeCardDark",
-    timeCardTitle = "Unified Date",
-    timeCardDate,
-  }: {
-    timeCardStyle: string;
-    timeCardTitle: string;
-    timeCardDate: React.ReactNode;
-  },
+    {
+        timeCardStyle = "timeCardDark",
+        timeCardTitle = "Unified Date",
+        timeCardDate,
+    }: {
+        timeCardStyle: string;
+        timeCardTitle: string;
+        timeCardDate: React.ReactNode;
+    },
 ) => {
-  return (
-    <div className={timeCardStyle}>
-      <h2 className="text-3xl font-bold">{timeCardTitle}</h2>
-      <p className="mt-2 mb-4 text-lg">
-        {timeCardDate}
-      </p>
-      <a
-        href="/jobs.html"
-        className="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700"
-      >
-        Start clock
-      </a>
-    </div>
-  );
+    const [isRunning, setIsRunning] = useState(false);
+
+    return (
+        <div className={timeCardStyle}>
+            <h2 className="text-3xl font-bold">{timeCardTitle}</h2>
+            <p className="mt-2 mb-4 text-lg">
+                {timeCardDate}{" "}
+                {isRunning && (
+                    <span className="text-orange-600 dark:text-orange-700 ml-2 ">
+                        <Clock isRunning={isRunning} />
+                    </span>
+                )}
+            </p>
+            <a
+                onClick={() => setIsRunning(!isRunning)}
+                className="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700"
+            >
+                {isRunning ? "No clock" : "Add clock"}
+            </a>
+        </div>
+    );
 };
 
 export default TimeCard;

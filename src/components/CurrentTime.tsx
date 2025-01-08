@@ -1,4 +1,3 @@
-// import React from "react";
 import TimeCard from "./TimeCard";
 import LocalDate from "./LocalDate";
 

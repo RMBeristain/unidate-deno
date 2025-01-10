@@ -16,7 +16,7 @@ const TimeCard = (
 
     return (
         <div className={timeCardStyle}>
-            <h2 className="text-3xl font-bold">{timeCardTitle}</h2>
+            <h2 className="doto-rounded text-3xl font-bold">{timeCardTitle}</h2>
             <p className="mt-2 mb-4 text-lg">
                 {timeCardDate}{" "}
                 {isRunning && (

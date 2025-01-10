@@ -31,6 +31,8 @@ export const getGregorianDate = (format: "long" | "iso", when = ""): string => {
         };
     } else {
         // For ISO format, we don't need locale-specific options
+        const offset = userDate.getTimezoneOffset();
+        userDate = new Date(userDate.getTime() - (offset * 60 * 1000));
         return userDate.toISOString().split("T")[0];
     }
 

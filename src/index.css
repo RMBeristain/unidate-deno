@@ -15,6 +15,17 @@ em {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* <uniquifier>: Use a unique and descriptive class name */
+
+.doto-rounded {
+  font-family: "Doto", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings:
+    "ROND" 11;
+}
+
 .imgShadow {
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #111);
@@ -34,6 +45,9 @@ em {
   .timeCardDark {
     @apply bg-sky-100 p-6 rounded-lg shadow-md;
   }
+  .tileTitle {
+    @apply text-gray-500 my-2;
+  }
 
   @media (prefers-color-scheme: dark) {
     .appButton {
@@ -45,5 +59,8 @@ em {
     .timeCardDark {
       @apply dark:bg-sky-500;
     }
+    .tileTitle {
+    @apply dark:text-gray-400;
+  }
   }
 }

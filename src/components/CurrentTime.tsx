@@ -1,5 +1,5 @@
 import TimeCard from "./TimeCard";
-import { getLocalDate } from "../UniDateConverter/Index";
+import { getGregorianDate } from "../UniDateConverter/Index";
 
 const CurrentTime = () => {
     return (
@@ -9,7 +9,7 @@ const CurrentTime = () => {
                     <TimeCard
                         timeCardStyle="timeCardLight"
                         timeCardTitle="Your Date"
-                        timeCardDate={getLocalDate("long")}
+                        timeCardDate={getGregorianDate("long")}
                     />
                     <TimeCard
                         timeCardStyle="timeCardDark"

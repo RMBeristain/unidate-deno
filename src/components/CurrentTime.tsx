@@ -1,7 +1,16 @@
+import { useState } from "react";
 import TimeCard from "./TimeCard";
-import { getGregorianDate } from "../UniDateConverter/Index";
+import {
+    getGregorianDate,
+    Style,
+    UnifiedDate,
+    Variant,
+} from "../UniDateConverter/Index";
 
 const CurrentTime = () => {
+    const [todayDate] = useState<UnifiedDate>(
+        new UnifiedDate(getGregorianDate("iso")),
+    );
     return (
         <section className="py-4">
             <div className="container-xl lg:container m-auto">
@@ -14,7 +23,10 @@ const CurrentTime = () => {
                     <TimeCard
                         timeCardStyle="timeCardDark"
                         timeCardTitle="Unified Date"
-                        timeCardDate="Fourthday 04, Quarter two-B 7584"
+                        timeCardDate={todayDate.format_date(
+                            Variant.UNI,
+                            Style.LONG,
+                        )}
                     />
                 </div>
             </div>

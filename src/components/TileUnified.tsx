@@ -23,10 +23,6 @@ const TileUnified = () => {
                 </h3>
             </div>
 
-            <div className="mb-5">
-                7625-12-06
-            </div>
-
             <input
                 id="UnifiedDate"
                 defaultValue={new UnifiedDate(getGregorianDate("iso"))
@@ -40,14 +36,14 @@ const TileUnified = () => {
             />
 
             <h3 className="text-sky-500 mb-2">
-                <div className="flex flex-col lg:flex-row justify-between mb-1">
-                    <div>Austral:</div>
+                <div className="flex flex-col justify-between mb-1">
+                    <div className="tileTitle">Austral:</div>
                     <div className="text-lg">
                         {userDate.format_date(Variant.AUS, Style.LONG)}
                     </div>
                 </div>
-                <div className="flex flex-col lg:flex-row justify-between mb-1">
-                    <div>Territorian:</div>
+                <div className="flex flex-col justify-between mb-1">
+                    <div className="tileTitle">Territorian:</div>
                     <div className="text-lg">
                         {userDate.format_date(Variant.SWT, Style.LONG)}
                     </div>

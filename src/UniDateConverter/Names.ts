@@ -134,25 +134,4 @@ export class RegularDate {
         19: new UniMonth("Summer start", new UQ(4, 4)),
         20: new UniMonth("Summer break", new UQ(4, 5)),
     };
-
-    // Helper function to merge objects (similar to ChainMap in Python)
-    private static mergeObjects<T>(obj1: T, obj2: T): T {
-        return Object.assign({}, obj1, obj2);
-    }
-
-    static get TERRITORIAN_MONTH_NAME_LONG(): {
-        [key: string | number]: UniMonth;
-    } {
-        return RegularDate.mergeObjects(
-            RegularDate.TERRITORIAN_MONTH_NAME_BASE,
-            RegularDate.UNIFIED_MONTH_NAME_LONG,
-        );
-    }
-
-    static get AUSTRAL_MONTH_NAME_LONG(): { [key: string | number]: UniMonth } {
-        return RegularDate.mergeObjects(
-            RegularDate.AUSTRAL_MONTH_NAME_BASE,
-            RegularDate.UNIFIED_MONTH_NAME_LONG,
-        );
-    }
 }

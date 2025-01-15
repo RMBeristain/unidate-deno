@@ -1,4 +1,4 @@
-import { UniDay, UnifiedDateType, UniMonth, UniWeek, UQ } from "./Definitions";
+import { UniDay, UnifiedDateType, UniMonth, UniWeek } from "./Definitions";
 import { FestiveDate, RegularDate } from "./Names";
 
 export enum Variant {
@@ -44,10 +44,6 @@ export class UnifiedDate {
         RegularDate.TERRITORIAN_MONTH_NAME_BASE;
     static readonly _AUSTRAL_MONTH_NAME_BASE =
         RegularDate.AUSTRAL_MONTH_NAME_BASE;
-    static readonly _TERRITORIAN_MONTH_NAME_LONG =
-        RegularDate.TERRITORIAN_MONTH_NAME_LONG;
-    static readonly _AUSTRAL_MONTH_NAME_LONG =
-        RegularDate.AUSTRAL_MONTH_NAME_LONG;
 
     private _year_start: Date | null = null;
     unified_date: UnifiedDateType | null = null;
@@ -84,14 +80,14 @@ export class UnifiedDate {
      */
     private _checkVariant(variant: Variant | string): string {
         if (variant in Variant) {
-            return variant as Variant;
+            return variant;
         } else {
             for (const thisVariant in Variant) {
                 if (
                     thisVariant.toUpperCase() ==
                         variant.toUpperCase().trim()
                 ) {
-                    return thisVariant as Variant;
+                    return thisVariant;
                 }
             }
         }
@@ -257,11 +253,15 @@ export class UnifiedDate {
 
         variant = this._checkVariant(variant);
 
+        if (typeof monthNumber == "string") {
+            return UnifiedDate._UNIFIED_MONTH_NAME_LONG[monthNumber];
+        }
+
         switch (variant) {
             case Variant.AUS:
-                return UnifiedDate._AUSTRAL_MONTH_NAME_LONG[monthNumber];
+                return UnifiedDate._AUSTRAL_MONTH_NAME_BASE[monthNumber];
             case Variant.SWT:
-                return UnifiedDate._TERRITORIAN_MONTH_NAME_LONG[monthNumber];
+                return UnifiedDate._TERRITORIAN_MONTH_NAME_BASE[monthNumber];
             default:
                 return UnifiedDate._UNIFIED_MONTH_NAME_LONG[monthNumber];
         }
@@ -395,5 +395,44 @@ export class UnifiedDate {
             new Date().toISOString().split("T")[0],
             style,
         );
+    }
+
+    print_calendar(): void {
+        console.log(
+            "Gregorian  Unified   Long                                   Territorian      Austral",
+        );
+        const _save_date = this.gregorian_date;
+        const year_start = this._year_start!;
+        let prev = "";
+
+        for (let d = 0; d < 366; d++) {
+            this.gregorian_date = new Date(
+                year_start.getTime() + d * 24 * 60 * 60 * 1000,
+            )
+                .toISOString()
+                .split("T")[0];
+            this.unify(this.gregorian_date);
+            const iso = this.format_date("Unified", "ISO");
+            const uni = this.format_date("Unified");
+            const swt = this.swt_date!.month.name;
+            const aus = this.austral_date!.month.name;
+
+            const date =
+                `${this.gregorian_date}  ${iso}  ${uni}  ${swt}  ${aus}`;
+
+            if (this.unified_date!.weekday.regular == 0) {
+                console.log(`\n${"=".repeat(104)}`);
+            } else if (this.unified_date!.month.name != prev) {
+                console.log(`${"-".repeat(104)}`);
+            }
+
+            if (d < 365 || this.unified_date!.month.numeric.quarter == 6) {
+                console.log(date);
+            }
+
+            prev = this.unified_date!.month.name;
+        }
+
+        this.unify(_save_date!);
     }
 }

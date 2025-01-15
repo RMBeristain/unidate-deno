@@ -47,7 +47,6 @@ const Gregorian: React.FC = () => {
                         showHint();
                     }}
                     onFocus={() => showHint()}
-                    autoFocus
                     className="mt-1 focus:ring-rose-500 focus:border-rose-500 block border-2
                         shadow-md sm:text-sm text-center border-sky-100 dark:border-sky-500 dark:bg-slate-400
                         dark:text-black rounded-md mb-8"

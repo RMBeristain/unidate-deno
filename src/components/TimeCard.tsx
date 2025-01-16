@@ -28,6 +28,7 @@ const TimeCard = (
             <a
                 onClick={() => setIsRunning(!isRunning)}
                 className="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700"
+                tabIndex={0}
             >
                 {isRunning ? "No clock" : "Add clock"}
             </a>

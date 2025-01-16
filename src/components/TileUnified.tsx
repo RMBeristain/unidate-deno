@@ -30,10 +30,23 @@ const TileUnified = () => {
                         Variant.UNI,
                         Style.ISO,
                     )}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    const date = event.target.value;
+                    let newDate = new UnifiedDate();
+                    if (date) {
+                        newDate.reverse_unidate(date);
+                    } else {
+                        newDate.unify();
+                    }
+                    setUserDate(newDate);
+                }}
                 className="mt-1 focus:ring-rose-500 focus:border-rose-500 block border-2
                         shadow-md sm:text-sm text-center border-sky-100 dark:border-sky-500 dark:bg-slate-400
                         dark:text-black rounded-md mb-8"
             />
+
+            <div className="border border-gray-100 dark:border-gray-600 mb-5">
+            </div>
 
             <h3 className="text-sky-500 mb-2">
                 <div className="flex flex-col justify-between mb-1">
@@ -50,7 +63,8 @@ const TileUnified = () => {
                 </div>
             </h3>
 
-            <div className="border border-gray-100 mb-5"></div>
+            <div className="border border-gray-100 dark:border-gray-600 mb-5">
+            </div>
 
             <div className="flex flex-col lg:flex-row justify-between mb-4">
                 <div className="doto-rounded text-orange-700 dark:text-orange-600 mb-3">

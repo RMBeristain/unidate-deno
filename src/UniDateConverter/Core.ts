@@ -380,7 +380,7 @@ export class UnifiedDate {
                 _gday.setDate(_gday.getDate() + _quarter);
             }
 
-            this.unify(_gday.toISOString().split("T")[0]);
+            this.unify(this.toISOStringNoTimeZone(_gday));
             return _gday;
         } catch (err) {
             console.error(
@@ -388,6 +388,13 @@ export class UnifiedDate {
             );
             throw err;
         }
+    }
+
+    toISOStringNoTimeZone(date: Date): string {
+        // Convert to ISO 8601 without timezone (e.g., do not convert to UTC first)
+        const offset = date.getTimezoneOffset();
+        date = new Date(date.getTime() - (offset * 60 * 1000));
+        return date.toISOString().split("T")[0];
     }
 
     static today(style: Style = Style.LONG): UnifiedDate {

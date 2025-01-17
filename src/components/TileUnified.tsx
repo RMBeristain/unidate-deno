@@ -3,8 +3,10 @@ import { Style, UnifiedDate, Variant } from "../UniDateConverter/Index";
 
 const TileUnified = () => {
     let userUnidate = new UnifiedDate(); // Today's date by default.
-    const [userDate, setUserDate] = useState<string>("");
     const [uniDate, setUniDate] = useState<UnifiedDate>(userUnidate);
+    const [userDate, setUserDate] = useState<string>(
+        uniDate.format_date(Variant.UNI, Style.ISO),
+    );
     const handleSubmit = (event: React.FormEvent) => event.preventDefault();
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let newUserDate = event.target.value;

@@ -1,9 +1,13 @@
+import { useContext } from "react";
 import Tile from "./Tile";
 import TileBackground from "./TileBackground";
 import Gregorian from "./TileGregorian";
 import TileUnified from "./TileUnified";
+import { UnidateContext } from "../Contexts";
 
 const Tools = () => {
+    const { uniDate, setUniDate } = useContext(UnidateContext);
+
     return (
         <section className="bg-sky-50 dark:bg-slate-600 px-4 py-10">
             <div className="container-xl lg:container m-auto">
@@ -14,13 +18,14 @@ const Tools = () => {
                     <Tile>
                         <TileBackground />
                     </Tile>
-
-                    <Tile>
-                        <Gregorian />
-                    </Tile>
-                    <Tile>
-                        <TileUnified />
-                    </Tile>
+                    <UnidateContext.Provider value={{ uniDate, setUniDate }}>
+                        <Tile>
+                            <Gregorian />
+                        </Tile>
+                        <Tile>
+                            <TileUnified />
+                        </Tile>
+                    </UnidateContext.Provider>
                 </div>
             </div>
         </section>

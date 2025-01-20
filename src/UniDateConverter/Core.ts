@@ -363,18 +363,15 @@ export class UnifiedDate {
             const _dayNum = parseInt(_day);
 
             if (_dayNum < 1 || _dayNum > 18) {
-                console.error("Invalid Unified day number: ", _dayNum);
-                return new Date();
+                throw new Error(`Invalid Unified day number: ${_dayNum}`);
             }
 
             if (_quarter < 1 || _quarter > 6) {
-                console.error("Invalid Unified quarter number: ", _quarter);
-                return new Date();
+                throw new Error(`Invalid Unified day number: ${_quarter}`);
             }
 
             if (_month < 0 || _month > 5) {
-                console.error("Invalid Unified month number: ", _month);
-                return new Date();
+                throw new Error(`Invalid Unified day number: ${_month}`);
             }
 
             const _gyear = this.reverse_year(_yearNum);

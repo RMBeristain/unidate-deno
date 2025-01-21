@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Style, UnifiedDate, Variant } from "../UniDateConverter/Index";
-import { UnidateContext } from "../Contexts";
 
 const showHint = () => {
     const hint = globalThis.document.getElementById("formatHintUni");
@@ -25,10 +24,9 @@ const hideDateError = () => {
 
 const TileUnified = () => {
     let workingUnidate = new UnifiedDate(); // Today's date by default.
-    const { uniDate, setUniDate } = useContext(UnidateContext);
-    const [userUniDate, setUserUniDate] = useState<UnifiedDate>(uniDate);
+    const [userUniDate, setUserUniDate] = useState<UnifiedDate>(workingUnidate);
     const [userISODate, setUserISODate] = useState<string>(
-        uniDate.format_date(Variant.UNI, Style.ISO),
+        workingUnidate.format_date(Variant.UNI, Style.ISO),
     );
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -48,7 +46,6 @@ const TileUnified = () => {
                 return;
             }
             setUserUniDate(workingUnidate); // local
-            setUniDate(workingUnidate); // context
             hideDateError();
             hideHint();
         } else {

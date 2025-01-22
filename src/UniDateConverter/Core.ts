@@ -402,8 +402,11 @@ export class UnifiedDate {
         }
     }
 
-    toISOStringNoTimeZone(date: Date): string {
+    toISOStringNoTimeZone(date: Date | string): string {
         // Convert to ISO 8601 without timezone (e.g., do not convert to UTC first)
+        if (typeof date === "string") {
+            date = new Date(date);
+        }
         const offset = date.getTimezoneOffset();
         date = new Date(date.getTime() - (offset * 60 * 1000));
         return date.toISOString().split("T")[0];

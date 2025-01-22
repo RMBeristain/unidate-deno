@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { Style, UnifiedDate, Variant } from "../UniDateConverter/Index";
+import React, { useContext, useEffect, useState } from "react";
+import {
+    getGregorianDate,
+    Style,
+    UnifiedDate,
+    Variant,
+} from "../UniDateConverter/Index";
+import { GregorianContext } from "../Contexts";
 
 const showHint = () => {
     const hint = globalThis.document.getElementById("formatHintUni");
@@ -23,10 +29,21 @@ const hideDateError = () => {
 };
 
 const TileUnified = () => {
-    let workingUnidate = new UnifiedDate(); // Today's date by default.
-    const [userUniDate, setUserUniDate] = useState<UnifiedDate>(workingUnidate);
-    const [userISODate, setUserISODate] = useState<string>(
-        workingUnidate.format_date(Variant.UNI, Style.ISO),
+    const { gregISO, setGregISO } = useContext(GregorianContext);
+    const [uniDate, setUniDate] = useState<UnifiedDate>(
+        new UnifiedDate(gregISO),
+    );
+    const [uniISO, setUniISO] = useState<string>(
+        uniDate.format_date(Variant.UNI, Style.ISO),
+    );
+
+    useEffect(
+        () => {
+            const _tmp = new UnifiedDate(gregISO);
+            setUniDate(_tmp);
+            setUniISO(_tmp.format_date(Variant.UNI, Style.ISO));
+        },
+        [gregISO],
     );
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -35,17 +52,22 @@ const TileUnified = () => {
         hideHint();
     };
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let newUserISODate = event.target.value;
-        setUserISODate(newUserISODate);
-        let isValidShape = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(newUserISODate);
+        let newISODate = event.target.value;
+        setUniISO(newISODate);
+        let isValidShape = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(newISODate);
         if (isValidShape) {
+            let newGregDate: Date; // user input converted to Gregorian date
             try {
-                workingUnidate.reverse_unidate(newUserISODate);
+                newGregDate = uniDate.reverse_unidate(newISODate);
             } catch (error) {
                 showDateError();
                 return;
             }
-            setUserUniDate(workingUnidate); // local
+            setUniDate(
+                new UnifiedDate(uniDate.toISOStringNoTimeZone(newGregDate)),
+            ); // local
+            // @ts-expect-error
+            setGregISO(uniDate.gregorian_date);
             hideDateError();
             hideHint();
         } else {
@@ -61,15 +83,18 @@ const TileUnified = () => {
                     Unified
                 </div>
                 <h3 className="text-xl font-extrabold text-sky-500 dark:text-sky-500">
-                    {userUniDate.format_date(Variant.UNI, Style.LONG)}
+                    {uniDate.format_date(Variant.UNI, Style.LONG)}
                 </h3>
             </div>
 
             <input
                 id="UnifiedDate"
-                value={userISODate}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    handleChange(event)}
+                value={uniISO}
+                onFocus={() => showHint()}
+                onBlur={() => hideHint()}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    handleChange(event);
+                }}
                 className="mt-1 focus:ring-rose-500 focus:border-rose-500 block border-2
                         shadow-md sm:text-sm text-center border-sky-100 dark:border-sky-500 dark:bg-slate-400
                         dark:text-black rounded-md mb-8"
@@ -89,13 +114,13 @@ const TileUnified = () => {
                 <div className="flex flex-col justify-between mb-1">
                     <div className="tileTitle">Austral:</div>
                     <div className="text-lg">
-                        {userUniDate.format_date(Variant.AUS, Style.LONG)}
+                        {uniDate.format_date(Variant.AUS, Style.LONG)}
                     </div>
                 </div>
                 <div className="flex flex-col justify-between mb-1">
                     <div className="tileTitle">Territorian:</div>
                     <div className="text-lg">
-                        {userUniDate.format_date(Variant.SWT, Style.LONG)}
+                        {uniDate.format_date(Variant.SWT, Style.LONG)}
                     </div>
                 </div>
             </h3>
@@ -116,10 +141,7 @@ const TileUnified = () => {
                     type="submit"
                     className="h-[36px] appButton text-center text-sm"
                     onClick={() => {
-                        setUserISODate(
-                            workingUnidate.format_date(Variant.UNI, Style.ISO),
-                        );
-                        setUserUniDate(workingUnidate);
+                        setGregISO(getGregorianDate("iso"));
                     }}
                 >
                     Reset date

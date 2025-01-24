@@ -14,13 +14,13 @@ const Tools = () => {
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <Tile>
-                            <TileBackground />
-                        </Tile>
-                        <Tile>
                             <Gregorian />
                         </Tile>
                         <Tile>
                             <TileUnified />
+                        </Tile>
+                        <Tile>
+                            <TileBackground />
                         </Tile>
                     </div>
                 </div>

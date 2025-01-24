@@ -17,7 +17,7 @@ const CurrentTime = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-lg">
                     <TimeCard
                         timeCardStyle="timeCardLight"
-                        timeCardTitle="Your Date"
+                        timeCardTitle="Today's Date"
                         timeCardDate={getGregorianDate("long")}
                     />
                     <TimeCard
